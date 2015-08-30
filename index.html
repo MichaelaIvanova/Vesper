@@ -28,13 +28,53 @@
        var animal = new Animal;
         animal.set('name');
         animal.set('age');
+
+      var Stupid = Parse.Object.extend('{"name": "pesho"}');
+      var st = new Stupid();
+      /*console.log(st.name);
        console.log(animal);
-       console.log(animal.get('age'));
+       console.log(animal.get('age'));*/
+
+      var MyClass = Parse.Object.extend("MyClass", {
+          //Instance methods,
+          initialize: function(name, age) {
+              this.name = name;
+              this.age = age;
+              return this;
+          }
+      }, {
+      });
+
+      var test = new MyClass();
+      console.log(test.initialize('Peshko','2'));
+
+      Object.defineProperty(test,'isbn',{
+          get: function () {
+              return this._isbn;
+          },
+          set: function (value) {
+              //A string with length exactly 10 or 13 digits
+             /* if(value.length!==10 || value.length!==13){
+                  throw new Error('invalid isbn');
+              }*/
+              //check if number
+             /* if(+value!==Number(value)){
+                  throw new Error('not a number');
+              }*/
+              this._isbn = value;
+          }
+      });
+      test.isbn = '1111111111';
+      test.set('isbn',test.isbn);
+      test.set('name',test.name);
+      console.log(test.name);
+      console.log(test.isbn);
+      test.save();
 
       //inheritance
       var cat = Object.create(animal);
-      console.log(cat);
-     console.log(cat.get('age'));
+     /* console.log(cat);
+     console.log(cat.get('age'));*/
 
   </script>
 

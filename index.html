@@ -31,14 +31,15 @@
     var inputTitle = '';
     var selectedCategory = '';
     var textAreaDescription = '';
+    var parseFile;
 
-    var label = $('<label>');
-    label.text('Enter title');
-    label.htmlFor = 'title';
+    var labelTitle = $('<label>');
+    labelTitle.text('Enter title');
+    labelTitle.htmlFor = 'title';
     var buttonAd = $('<button class="buttonAd">');
     buttonAd.text('Add Ad');
 
-    form.append(label).append(input);
+    form.append(labelTitle).append(input);
 
     var select = $('<select id="category">').appendTo(form);
     var optionDefault = $('<option>Choose Category</option>').appendTo(select);
@@ -52,7 +53,39 @@
 
     var description = $('<textarea class="description">').appendTo(form);
 
+    var upload = $('<input id="profilePhotoFileUpload" type="file" onchange="readURL(this);" />');
+    var displayImage = $('<img id="displayImg" src="#" alt="your image" />');
+    displayImage.appendTo(form);
+    upload.appendTo(form);
     form.append(buttonAd);
+
+
+   function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#displayImg')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+
+        }
+    }
+
+    upload.change(function(){
+        var fileUploadControl = $("#profilePhotoFileUpload")[0];
+        if (fileUploadControl.files.length > 0) {
+            var file = fileUploadControl.files[0];
+            var name = "photo.jpg";
+            parseFile = new Parse.File(name, file);
+            console.log(parseFile);
+        }
+    });
 
     //events
 
@@ -80,6 +113,7 @@
         custom.set('category', newAdd.category);
         custom.set('title', newAdd.title);
         custom.set('description', newAdd.description);
+        //custom.set('IMG',parseFile);
         custom.save();
 
        //TODO: Make different cases

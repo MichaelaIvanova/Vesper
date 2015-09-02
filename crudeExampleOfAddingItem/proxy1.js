@@ -32,7 +32,7 @@ function createProductDiv (product) {
     productDescription.text(product.description);
     sigDivItem.append(productName).append(productPicture).append(productDescription);
 
-    sigDivItem.attr("style","border:1px solid black; width:20%");
+    sigDivItem.attr("style","border:1px solid black; width:20%;");
 
     return sigDivItem;
 

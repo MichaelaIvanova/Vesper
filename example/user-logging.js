@@ -88,8 +88,7 @@ $signInButton.on('click', function(ev) {
 
             },
             error: function(user, error) {
-                alert('NO SUCH USER!');
-
+                $('#invalid-user-div').fadeIn(500);
 
             }
         });

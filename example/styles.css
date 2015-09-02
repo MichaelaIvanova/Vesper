@@ -1,12 +1,14 @@
-body {
-    padding-top: 90px;
+#input-form{
+	padding-top: 90px;
 }
-
 #login-form{
-	display:block;
+	display: block;
 }
 #register-form{
 	 display: none;
+}
+#navbar{
+	display:none;
 }
 
 #invalid-user-div{

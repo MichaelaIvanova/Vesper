@@ -85,7 +85,8 @@ $signInButton.on('click', function(ev) {
                 var collection = user.get('dataStored');
 
                 console.log(collection);
-
+                $('#input-form').fadeOut(100);
+                $('#navbar').fadeIn(500);
             },
             error: function(user, error) {
                 $('#invalid-user-div').fadeIn(500);

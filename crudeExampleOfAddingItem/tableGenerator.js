@@ -61,4 +61,6 @@ function generateTable (argument) {
 var tableModule = generateTable();
 
 var table = tableModule.getTable();
-$('body').append(table);
+var $body = $('body');
+$body.append(table);
+$('<div>').attr('id','productGalary').appendTo($body);

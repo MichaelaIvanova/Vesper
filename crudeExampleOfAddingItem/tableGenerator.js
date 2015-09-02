@@ -23,6 +23,7 @@ function generateTable (argument) {
 	    submitButton = $('<button/>');
     
     tableWrapper.attr('id','productInputForm');
+    tableWrapper.attr('class','afterLogIn');
 	nameInput.attr('id','productName');
 	descriptionInput.attr('id','productDescription');
 	priceInput.attr('id','productPrice');
@@ -63,4 +64,4 @@ var tableModule = generateTable();
 var table = tableModule.getTable();
 var $body = $('body');
 $body.append(table);
-$('<div>').attr('id','productGalary').appendTo($body);
+$('<div>').attr('id','productGalary').attr('class','afterLogIn').appendTo($body);

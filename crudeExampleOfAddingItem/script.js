@@ -39,6 +39,7 @@ validator = {
 
         },
         ifNumber: function(obj, name) {
+            obj=+obj;
             if (typeof(obj) !== 'number') {
                 throw new Error(name + ' must be a number');
             }
@@ -47,7 +48,7 @@ validator = {
         name = name || 'Value';
         this.ifUndefined(val, name);
         this.ifNumber(val, name);
-             if (val <= 0) {
+             if (+val <= 0) {
             throw new Error(name + ' must be positive number');
              }
         },

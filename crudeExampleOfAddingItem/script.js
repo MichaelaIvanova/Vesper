@@ -11,23 +11,23 @@ validator = {
         ifUndefined: function(obj, name) {
             if (typeof(obj) === 'undefined') {
                 throw new Error(name + ' cannot be undefined');
-            };
+            }
         },
         ifString: function(obj, name) {
             if (typeof(obj) !== 'string') {
                 throw new Error(name + ' must be a string');
-            };
+            }
         },
         ifStringIsEmpty: function(str, name) {
             if (str.length < 1) {
                 throw new Error(name + ' string must not be empty');
-            };
+            }
         },
         ifInLenghtRange: function(str, min, max, name) {
             var len = str.length;
             if (len < min || len > max) {
                 throw new Error(name + ' must be between ' + min + ' and ' + max + ' characters long.');
-            };
+            }
         },
         ifOnlyNumbersInString: function(str, name) {
             var reg = /^\d+$/;
@@ -35,18 +35,26 @@ validator = {
 
             if (!key) {
                 throw new Error(name + ' must contain only numbers');
-            };
+            }
 
         },
         ifNumber: function(obj, name) {
             if (typeof(obj) !== 'number') {
                 throw new Error(name + ' must be a number');
-            };
+            }
+        },
+         validatePositiveNumber: function (val, name) {
+        name = name || 'Value';
+        this.ifUndefined(val, name);
+        this.ifNumber(val, name);
+             if (val <= 0) {
+            throw new Error(name + ' must be positive number');
+             }
         },
         ifNoArguments: function(input, name) {
             if (input.length < 1) {
                 throw new Error('Must add arguments when using ' + name);
-            };
+            }
         }
     };    
 
@@ -71,7 +79,7 @@ product = (function() {
                 return this._description;
             },
             set: function(str) {
-                validator.ifUndefined(str);
+                validator.ifUndefined(str,'description');
                 validator.ifString(str);
                 validator.ifStringIsEmpty(str);
 
@@ -84,7 +92,7 @@ product = (function() {
                 return this._name;
             },
             set: function(str) {
-                validator.ifUndefined(str);
+                validator.ifUndefined(str,'name');
                 validator.ifString(str);
                 validator.ifStringIsEmpty(str);
                 validator.ifInLenghtRange(str, 2, 40, 'Name of the product');
@@ -92,8 +100,18 @@ product = (function() {
                 this._name = str;
             }
         });
+        Object.defineProperty(product, 'price', {
+             get: function() {
+            return this._price;
+             },
+             set: function(value) {
+                 validator.ifUndefined(value,'Price');
+                 validator.validatePositiveNumber(value,'Price');
+            this._price = value;
+            }
+         });
 
-        //TODO price and url need valdiation
+        //TODO url need valdiation
 
 
         return product;
@@ -101,12 +119,10 @@ product = (function() {
 
 
 food = (function  (parent) {
-    var food;
-
-    food = Object.create(parent);
+    var food = Object.create(parent);
 
     Object.defineProperty(food,'init',{
-        value: function  (description,name,imaURL,price,expirationDate, calories) {
+        value: function  (description,name,imgURL,price,expirationDate, calories) {
             parent.init.call(this,description,name,imgURL,price);
             this.expirationDate = expirationDate;
             this.calories = calories;
@@ -114,17 +130,22 @@ food = (function  (parent) {
             return  this;
         }
     });
+    Object.defineProperty(food, 'calories', {
+        get: function() {
+            return this._calories;
+        },
+        set: function(value) {
+            validator.ifUndefined(value,'Calories');
+            validator.validatePositiveNumber(value,'Calories');
+            this._calories = value;
+        }
+    });
     
-    //TODO add validation
-
     return food;
 
 }(product));
-
-vehicle = (function  (parent) {
-    var vehicle;
-
-    vehicle = Object.create(parent);
+ vehicle = (function  (parent) {
+    var vehicle = Object.create(parent);
 
     Object.defineProperty(vehicle,'init',{
         value: function  (description,name,imgURL,price,mileage,horsePower,manufacturer) {
@@ -136,9 +157,117 @@ vehicle = (function  (parent) {
             return this;
         }
     });
-    
-    //TODO add validation
+    Object.defineProperty(vehicle, 'mileage', {
+        get: function() {
+            return this._mileage;
+        },
+        set: function(value) {
+            validator.ifUndefined(value,'mileage');
+            validator.validatePositiveNumber(value,'mileage');
+            this._mileage = value;
+        }
+    });
+    Object.defineProperty(vehicle, 'horsePower', {
+        get: function() {
+            return this._horsePower;
+        },
+        set: function(value) {
+            validator.ifUndefined(value,'Horse power');
+            validator.validatePositiveNumber(value,'Horse power');
+            this._horsePower = value;
+        }
+    });
+    Object.defineProperty(vehicle, 'manufacturer', {
+        get: function() {
+            return this._manufacturer;
+        },
+        set: function(str) {
+            validator.ifUndefined(str,'manufacturer');
+            validator.ifString(str);
+            validator.ifStringIsEmpty(str);
+            validator.ifInLenghtRange(str, 2, 40, 'manufacturer');
+
+            this._manufacturer = str;
+        }
+    });
+
     return vehicle;
+
+}(product));
+
+clothes = (function  (parent) {
+    var clothes = Object.create(parent);
+
+    Object.defineProperty(clothes,'init',{
+        value: function  (description,name,imgURL,price,type, size) {
+            parent.init.call(this,description,name,imgURL,price);
+            this.type = type;
+            this.size = size;
+
+            return  this;
+        }
+    });
+    Object.defineProperty(clothes, 'type', {
+        get: function() {
+            return this._type;
+        },
+        set: function(value) {
+            validator.ifUndefined(value,'type');
+            this._type = value;
+        }
+    });
+    Object.defineProperty(clothes, 'size', {
+        get: function() {
+            return this._size;
+        },
+        set: function(value) {
+            validator.ifUndefined(value,'size');
+            this._size = value;
+        }
+    });
+
+
+    return clothes;
+
+}(product));
+
+appliance = (function  (parent) {
+    var appliance = Object.create(parent);
+
+    Object.defineProperty(appliance,'init',{
+        value: function  (description,name,imgURL,price,manufacturer, condition) {
+            parent.init.call(this,description,name,imgURL,price);
+            this.manufacturer = manufacturer;
+            this.condition= condition;
+
+            return  this;
+        }
+    });
+    Object.defineProperty(appliance, 'manufacturer', {
+        get: function() {
+            return this._manufacturer;
+        },
+        set: function(str) {
+            validator.ifUndefined(str,'manufacturer');
+            validator.ifString(str);
+            validator.ifStringIsEmpty(str);
+            validator.ifInLenghtRange(str, 2, 40, 'manufacturer');
+
+            this._manufacturer = str;
+        }
+    });
+    Object.defineProperty(appliance, 'condition', {
+        get: function() {
+            return this._condition;
+        },
+        set: function(value) {
+            validator.ifUndefined(value,'condition');
+            this._condition = value;
+        }
+    });
+
+
+    return appliance;
 
 }(product));
 

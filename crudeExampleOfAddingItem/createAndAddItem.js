@@ -15,9 +15,30 @@ addItemButton.on("click", function  () {
 
 	currentProduct = Object.create(product).init(currentDescription,currentName,currentUrl,currentPrice);
 
+	var Item = Parse.Object.extend('Item');
+
+	var storedItem = new Item({
+		name: currentProduct.name,
+		description: currentProduct.description,
+		image: currentProduct.imgURL,
+		price: currentProduct.price,
+	});
+
+	storedItem.save(null, {
+		success: function (storedNote) {
+			var $Ad = $('<div class="published-ad">NEWWWWWWW AD</div>');
+			$Ad.appendTo($navbar);
+			console.log("successfully saved");
+		},
+		error: function (storedNote, error) {
+			alert("Error: " + error.code + " " + error.message);
+		}
+	});
+	alert('WORKING');
+
 	var currentProductDiv = createProductDiv(currentProduct);
 	$('#productGalary').append(currentProductDiv);
-})
+});
 
 function createProductDiv (product) {
 	var sigDivItem = $("<div/>"),

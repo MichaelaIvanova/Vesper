@@ -70,8 +70,7 @@ function generateTable (argument) {
     
     $('<td/>').append(submitButton).attr('colspan','2').appendTo(submitRow); 
 
-    
-    
+
 
 	table.append(nameRow).append(descriptionRow)
 	                     .append(priceRow)

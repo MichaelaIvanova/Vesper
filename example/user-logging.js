@@ -13,7 +13,7 @@ var $signInFieldPassword = $('#password-log-in');
 
 var $signInForm = $('#input-form');
 var $navbar = $('#navbar');
-
+var $addButton = $('#addItem');
 
 function saveCurrentUserSession(username) {
     if (typeof username === 'undefined' || username === null) {
@@ -135,11 +135,20 @@ $signInButton.on('click', function (ev) {
 
                 }).then(function () {
                     alert('Everyting is loaded:))))))))))');
+                    jQuery.ajax({
+                        url: "add-item-database.js",
+                        dataType: "script",
+                        cache: true
+                    })
+                }).then(function(){
+                    alert('Loaded Adder function!')
                 });
 
-
                 //displayData();
-
+                storedItem.set('user',user);
+                storedItem.save();
+                user.addUnique("dataStored", storedItem);
+                user.save();
                 //console.log(user.get('username'));
                 var collection = user.get('dataStored');
 

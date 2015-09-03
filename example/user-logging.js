@@ -1,17 +1,26 @@
 Parse.initialize("xTAsfMOLmOoOQlLbQkYAWgeIy1ixgHk306RMJFdh", "9Z17vijIoN14L2XXvRM0Uta2AmrCMNsZW03HIG55");
+var $wrapper = $('#wrapper');
 
 var $signUpButton = $('#register-submit');
 var $signUpFieldUsername = $('#username-register');
 var $signUpFieldPasswordInitial = $('#password-register');
-var $signUpFieldEmail =$('#email');
+var $signUpFieldEmail = $('#email');
 var $signUpFieldPasswordConfirmed = $('#confirm-password');
 
 var $signInButton = $('#login-submit');
-var $signInFieldUsername =$('#username-log-in');
+var $signInFieldUsername = $('#username-log-in');
 var $signInFieldPassword = $('#password-log-in');
 
-function saveCurrentUserSession(username){
-    if(typeof username === 'undefined' || username === null){
+var $signInForm = $('#input-form');
+var $navbar = $('#navbar');
+
+var $addHolder = $('<div id="adder-holder"></div>');
+
+
+//var $buttonAd = $('<button id="button-ad">');
+
+function saveCurrentUserSession(username) {
+    if (typeof username === 'undefined' || username === null) {
         throw new Error('Incorrect username!');
     }
 
@@ -19,15 +28,16 @@ function saveCurrentUserSession(username){
 }
 
 //////// SIGN UP /////////////////////////
-$signUpButton.on('click', function(event) {
+$signUpButton.on('click', function (event) {
     alert('Button clicked');
 
     event.preventDefault();
     var loggedInUser = Parse.User.current();
     Parse.User.logOut();
+
     console.log($signUpFieldUsername.val());
     console.log($signUpFieldPasswordInitial.val());
-    //User.signUp($signUpFieldUsername.val(),$signUpFieldPasswordInitial.val()) ;
+
     var user = new Parse.User();
     var init = $signUpFieldPasswordInitial.val();
     var confirmed = $signUpFieldPasswordConfirmed.val();
@@ -43,11 +53,36 @@ $signUpButton.on('click', function(event) {
 
                 saveCurrentUserSession($signUpFieldUsername.val());
 
-               /* //$nameTitle.html('Logged in as ' + $signUpFieldUsername.val());
-                $invalidPassword.detach();
-                //$container.prepend($logOut);
-                //$container.prepend($nameTitle);
-                displayData();*/
+                $signInForm.hide();
+                $navbar.show();
+
+
+                jQuery.ajax({
+                    url: "../crudeExampleOfAddingItem/tableGenerator.js",
+                    dataType: "script",
+                    cache: true
+                }).then(function () {
+                    alert('Table Generator loaded');
+                    jQuery.ajax({
+                        url: "../crudeExampleOfAddingItem/script.js",
+                        dataType: "script",
+                        cache: true
+                    })
+                }).then(function () {
+                    alert('Scrip.js loaded');
+
+                    jQuery.ajax({
+                        url: "../crudeExampleOfAddingItem/createAndAddItem.js",
+                        dataType: "script",
+                        cache: true
+                    })
+
+                }).then(function () {
+                    alert('Everyting is loaded:))))))))))');
+                });
+
+
+
             },
             error: function (user, error) {
                 alert("Error: " + error.code + " " + error.message);
@@ -63,7 +98,7 @@ $signUpButton.on('click', function(event) {
 
 ///////// SIGN IN ///////////////////
 
-$signInButton.on('click', function(ev) {
+$signInButton.on('click', function (ev) {
 
     event.preventDefault();
     var $this = $(this);
@@ -72,13 +107,18 @@ $signInButton.on('click', function(ev) {
     var loggedInUser = Parse.User.current();
     Parse.User.logOut();
 
-    loggedInUser =  Parse.User.current();
+    loggedInUser = Parse.User.current();
     console.log(loggedInUser);
 
-    if(!loggedInUser){
+    if (!loggedInUser) {
         Parse.User.logIn($signInFieldUsername.val(), $signInFieldPassword.val(), {
-            success: function(user) {
+            success: function (user) {
                 saveCurrentUserSession($signInFieldUsername.val());
+
+                $signInForm.hide();
+                $navbar.show();
+
+                $('<div id="product-adder">').appendTo($navbar);
                 //displayData();
 
                 //console.log(user.get('username'));
@@ -88,7 +128,7 @@ $signInButton.on('click', function(ev) {
                 $('#input-form').fadeOut(100);
                 $('#navbar').fadeIn(500);
             },
-            error: function(user, error) {
+            error: function (user, error) {
                 $('#invalid-user-div').fadeIn(500);
 
             }

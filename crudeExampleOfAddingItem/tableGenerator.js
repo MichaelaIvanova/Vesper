@@ -95,4 +95,4 @@ var tableModule = generateTable();
 var table = tableModule.getTable();
 var $body = $('body');
 $body.append(table);
-$('<div>').attr('id','productGalary').attr('class','afterLogIn').appendTo($body);
+$('<div>').attr('id','productGalary').attr('class','afterLogIn').appendTo($navbar);

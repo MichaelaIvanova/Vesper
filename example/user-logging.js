@@ -74,9 +74,13 @@ $signUpButton.on('click', function (event) {
 
                 }).then(function () {
                     alert('Everyting is loaded:))))))))))');
-                });
+                }).then(function () {
 
-
+                    storedItem.set('user', user);
+                    storedItem.save();
+                    user.addUnique("dataStored", storedItem);
+                    user.save();
+                })
             },
             error: function (user, error) {
                 alert("Error: " + error.code + " " + error.message);
@@ -140,18 +144,19 @@ $signInButton.on('click', function (ev) {
                         dataType: "script",
                         cache: true
                     })
-                }).then(function(){
+                }).then(function () {
                     alert('Loaded Adder function!')
-                });
+                }).then(function(){
 
                 //displayData();
-                storedItem.set('user',user);
+                storedItem.set('user', user);
                 storedItem.save();
                 user.addUnique("dataStored", storedItem);
                 user.save();
+
+                });
                 //console.log(user.get('username'));
                 var collection = user.get('dataStored');
-
                 console.log(collection);
                 $('#input-form').fadeOut(100);
                 $('#navbar').fadeIn(500);

@@ -1,5 +1,5 @@
 var addItemButton = $('#addItem');
-
+var storedItem;
 var currentProduct;
 
 addItemButton.on("click", function  () {
@@ -21,12 +21,12 @@ addItemButton.on("click", function  () {
 		name: currentProduct.name,
 		description: currentProduct.description,
 		image: currentProduct.imgURL,
-		price: currentProduct.price,
+		price: currentProduct.price
 	});
 
 	storedItem.save(null, {
 		success: function (storedNote) {
-			var $Ad = $('<div class="published-ad">NEWWWWWWW AD</div>');
+			var $Ad = $('<div class="published-ad">NEW AD</div>');
 			$Ad.appendTo($navbar);
 			console.log("successfully saved");
 		},
@@ -34,10 +34,17 @@ addItemButton.on("click", function  () {
 			alert("Error: " + error.code + " " + error.message);
 		}
 	});
-	alert('WORKING');
+	alert('Product Added');
 
 	var currentProductDiv = createProductDiv(currentProduct);
 	$('#productGalary').append(currentProductDiv);
+
+	$('#productDescription').val('');
+	$('#productName').val('');
+	$('#productURL').val('');
+	$('#productPrice').val(0);
+
+
 });
 
 function createProductDiv (product) {

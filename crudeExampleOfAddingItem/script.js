@@ -1,4 +1,10 @@
+//TODO make it an module
+
 var product,
+    food,
+    vehicle,
+    clothes,
+    appliance,
     validator;
 
 validator = {
@@ -87,8 +93,52 @@ product = (function() {
             }
         });
 
+        //TODO price and url need valdiation
+
 
         return product;
     }());
 
+
+food = (function  (parent) {
+    var food;
+
+    food = Object.create(parent);
+
+    Object.defineProperty(food,'init',{
+        value: function  (description,name,imaURL,price,expirationDate, calories) {
+            parent.init.call(this,description,name,imgURL,price);
+            this.expirationDate = expirationDate;
+            this.calories = calories;
+
+            return  this;
+        }
+    });
+    
+    //TODO add validation
+
+    return food;
+
+}(product));
+
+vehicle = (function  (parent) {
+    var vehicle;
+
+    vehicle = Object.create(parent);
+
+    Object.defineProperty(vehicle,'init',{
+        value: function  (description,name,imgURL,price,mileage,horsePower,manufacturer) {
+            parent.init.call(this,description,name,imgURL,price);
+            this.mileage = mileage;
+            this.horsePower = horsePower;
+            this.manufacturer = manufacturer;
+
+            return this;
+        }
+    });
+    
+    //TODO add validation
+    return vehicle;
+
+}(product));
 

@@ -48,7 +48,6 @@ function generateTable (argument) {
     $('<option>').text('General purpose item').appendTo(categorySelector);
 	$('<option/>').text('Electronics').appendTo(categorySelector);
 	$('<option/>').text('Food').appendTo(categorySelector);
-	$('<option/>').text('Household appliance').appendTo(categorySelector);
 	$('<option/>').text('Vehicles').appendTo(categorySelector);
 	$('<option/>').text('Clothes').appendTo(categorySelector);
 

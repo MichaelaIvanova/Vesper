@@ -160,6 +160,7 @@ $signInButton.on('click', function (ev) {
                 console.log(collection);
                 $('#input-form').fadeOut(100);
                 $('#navbar').fadeIn(500);
+                $('#navbar .container').append($('<h3>Hello, <strong>' + Parse.User.current().attributes.username + '</strong></h3>').css('float', 'right'));
             },
             error: function (user, error) {
                 $('#invalid-user-div').fadeIn(500);

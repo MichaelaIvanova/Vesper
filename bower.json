@@ -1,0 +1,23 @@
+{
+  "name": "Vesper",
+  "version": "0.0.0",
+  "homepage": "https://github.com/MichaelaIvanova/Vesper",
+  "authors": [
+    "Team Vesper"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "jquery": "~2.1.4",
+    "jquery-ui": "jqueryui#~1.11.4",
+    "parse": "~1.5.0",
+    "system.js": "~0.18.17"
+  }
+}

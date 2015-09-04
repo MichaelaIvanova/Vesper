@@ -140,7 +140,7 @@ $signInButton.on('click', function (ev) {
                 }).then(function () {
                     alert('Everyting is loaded:))))))))))');
                     jQuery.ajax({
-                        url: "add-item-database.js",
+                        url: "scripts/add-item-database.js",
                         dataType: "script",
                         cache: true
                     })
